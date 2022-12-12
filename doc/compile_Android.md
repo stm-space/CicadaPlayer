@@ -26,20 +26,33 @@ This page is an introduction to the compilation for Android on MacOS or Ubuntu.
         sudo apt-get utomake git libtool autoconf
         ```
  
-2. Environment setup
+2. 设置环境变量（针对 Mac 设备）
 
-     ```bash
-     mkdir ~/Android-env/
-     ln -s your_ndk_path ~/Android-env/
-    ```
+	```bash
+	export ANDROID_SDK_HOME=$HOME/Library/Android/sdk
+	export PATH=$PATH:$ANDROID_SDK_HOME
+	
+	export ANDROID_NDK=${ANDROID_SDK_HOME}/ndk/android-ndk-r14b
+	export PATH=$PATH:$ANDROID_NDK
+	
+	export PATH=$PATH:${ANDROID_NDK}:${ANDROID_NDK}/toolchains/arm-linux-androideabi-4.9/prebuilt/${HOST}-x86_64/bin
+	export PATH=$PATH:${ANDROID_NDK}/toolchains/aarch64-linux-android-4.9/prebuilt/${HOST}-x86_64/bin
+	export PATH=$PATH:${ANDROID_SDK_HOME}/platform-tools
+	
+	export ANDROID_NDK_ROOT=${ANDROID_NDK}
+	export ANDROID_BUILD_DIR=$HOME/Downloads/github/CicadaPlayer
+	export ANDROID_NDK_HOME=${ANDROID_NDK}
+	export NDK_ROOT=${ANDROID_NDK}
+	export VERSION="2022.1212.1522"
+	```
 
-4. build_external
+3. 编译
+    
     ```bash
-    . setup.env
-    cd external/
-    ./build_external.sh Android
+    cd external
+    sh build_external.sh Android
     ```
-5. open the Android studio project  ../platform/Android/source/
-6. edit local.properties ,add ndk.dir=your_ndk_path
+4. open the Android studio project  ../platform/Android/source/
+5. edit local.properties ,add ndk.dir=your_ndk_path
 
 
