@@ -15,7 +15,7 @@ namespace Cicada {
     jmethodID gj_ds_Dispose = nullptr;
 
     JNIEXPORT void JNICALL jniOnFrameAvailable
-            (JNIEnv *env, jclass jc, jlong handler)
+            (JNIEnv *env, jobject jc, jlong handler)
     {
         DecoderSurface *decoderSurface = (DecoderSurface *)handler;
         decoderSurface->onFrameAvailable();
