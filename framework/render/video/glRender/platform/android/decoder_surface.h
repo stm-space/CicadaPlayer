@@ -49,7 +49,7 @@ private:
     int                     mTextureId{-1};
     bool                    mbNeedReleaseSurface{false};
     jobject                 mSurface{nullptr};
-    jobject                 mSurfaceTexture{nullptr};
+    jobject                 surface_texture_{nullptr};
     jfloatArray mTransformMatrix{nullptr};
     DecoderSurfaceCallback* mCallback{nullptr};
 

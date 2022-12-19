@@ -80,11 +80,11 @@ namespace Cicada {
                 mbNeedReleaseSurface = false;
             }
 
-            if (mSurfaceTexture) {
+            if (surface_texture_) {
                 // stop SurfaceTexture Thread
-                handle->CallVoidMethod(mSurfaceTexture, gj_ds_Dispose);
+                handle->CallVoidMethod(surface_texture_, gj_ds_Dispose);
                 // delete instance
-                handle->DeleteGlobalRef(mSurfaceTexture);
+                handle->DeleteGlobalRef(surface_texture_);
             }
 
             if (mTransformMatrix) {
@@ -130,7 +130,7 @@ namespace Cicada {
 
     bool DecoderSurface::UpdateTexImg()
     {
-        if (!mSurfaceTexture) {
+        if (!surface_texture_) {
             AF_LOGE("mSurfaceTexture is nullptr") ;
             return false;
         }
@@ -139,7 +139,7 @@ namespace Cicada {
         JNIEnv* handle = jniEnv.getEnv();
 
         if (handle) {
-            handle->CallVoidMethod(mSurfaceTexture, gj_ds_UpdateTexImgMethod);
+            handle->CallVoidMethod(surface_texture_, gj_ds_UpdateTexImgMethod);
         }
 
         return true;
@@ -149,7 +149,7 @@ namespace Cicada {
     {
         bool ret = false;
 
-        if (!mSurfaceTexture) {
+        if (!surface_texture_) {
             AF_LOGE("mSurfaceTexture is nullptr") ;
             return false;
         }
@@ -170,7 +170,7 @@ namespace Cicada {
                 return false;
             }
 
-            handle->CallVoidMethod(mSurfaceTexture, gj_ds_GetTransformMatrix, mTransformMatrix);
+            handle->CallVoidMethod(surface_texture_, gj_ds_GetTransformMatrix, mTransformMatrix);
             jfloat *matrix_get = handle->GetFloatArrayElements(mTransformMatrix, JNI_FALSE);
             for (int i = 0; i < 16; ++i) {
                 matrix[i] = matrix_get[i];
@@ -184,22 +184,21 @@ namespace Cicada {
 
     int DecoderSurface::createSurface(int textureId, JNIEnv *env)
     {
-
-        AndroidJniHandle<jobject> obj(env->NewObject(gj_ds_Class, gj_ds_midSurfaceTexture));
+        jobject obj = env->NewObject(gj_ds_Class, gj_ds_midSurfaceTexture);
 
         if (!obj) {
             AF_LOGE("failed to create surfaceTexture obj") ;
             return -4;
         }
 
-        mSurfaceTexture = env->NewGlobalRef(obj);
+        surface_texture_ = env->NewGlobalRef(obj);
 
-        if (!mSurfaceTexture) {
+        if (!surface_texture_) {
             AF_LOGE("failed to create surfaceTexture") ;
             return -5;
         }
 
-        obj = (jobject)env->CallObjectMethod(mSurfaceTexture, gj_ds_midCreateSurface, mTextureId, (long)this);
+        obj = (jobject)env->CallObjectMethod(surface_texture_, gj_ds_midCreateSurface, mTextureId, (long)this);
 
         if (!obj) {
             AF_LOGE("failed to create Surface obj") ;
