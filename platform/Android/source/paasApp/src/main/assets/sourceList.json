@@ -56,6 +56,11 @@
         "url": "https://alivc-demo-vod.aliyuncs.com/b6e5d6f712dc49e783a95e410ee146a8/8bc13a7c1c744667bd0eb95711b3c3c0-c985bb021890b23af8478741023fc3d4-sd.m3u8",
         "type": "url",
         "name": "hls"
+      },
+      {
+        "url": "http://192.168.0.105:56789/hevc1080p60fps.mp4",
+        "type": "url",
+        "name": "mp4"
       }
     ]
   },
